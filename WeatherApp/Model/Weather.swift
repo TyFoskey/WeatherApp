@@ -9,6 +9,8 @@
 import Foundation
 
 struct Weather: Codable {
+    let lat: Double
+    let lon: Double
     let current: CurrentWeather
     let daily: [DailyWeather]
     let hourly: [CurrentWeather]

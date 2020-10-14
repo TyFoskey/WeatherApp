@@ -10,18 +10,23 @@ import SwiftUI
 
 struct HeaderView: View {
     let whiteBackgroundColor = Color(red: 1, green: 1, blue: 1, opacity: 0.8)
+    @Binding var isPresented: Bool
+    @Binding var isShowingDetails: Bool
     var body: some View {
         HStack {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(whiteBackgroundColor)
-                .font(.system(size: 23, weight: .semibold, design: .monospaced))
-                .padding(.leading, 20)
-            Spacer()
-//            Text("11:37")
-//                .foregroundColor(.white)
-//                .font(.system(size: 20))
-//                .padding(.trailing, 20)
-            
+            if isShowingDetails == false {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(whiteBackgroundColor)
+                    .font(.system(size: 23, weight: .semibold, design: .monospaced))
+                    .padding(.leading, 20)
+                    .onTapGesture {
+                        print("tapped magnifying glass")
+                        self.isPresented.toggle()
+                }
+                Spacer()
+            } else {
+                Text("")
+            }
         }
     }
 }

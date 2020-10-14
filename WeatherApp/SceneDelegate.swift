@@ -12,7 +12,8 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    let defaults = UserDefaults.standard
+    let coordinatesCache = CoordinatesCache()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,7 +21,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
+        if isAppAlreadyLaunchedOnce() == false {
+            let nycCoordinate = Coordinate.newYorkCity
+            coordinatesCache.save([nycCoordinate])
+        }
+        
+        let coordinates = coordinatesCache.get()
+        print(coordinates.count)
+        //Coordinate(latitude: 40.7986, longitude: -74.2391)
+        let networkManger = NetworkManager(coordinates: coordinates, coordinatesCache: coordinatesCache)
+        let contentView = ContentView().environmentObject(networkManger)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -59,6 +69,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func isAppAlreadyLaunchedOnce() -> Bool {
+        if let _ = defaults.string(forKey: "isAppAlreadyLaunchedOnce") {
+            return true
+        } else {
+            defaults.set(true, forKey: "isAppAlreadyLaunchedOnce")
+            return false
+        }
+    }
 
 }
 

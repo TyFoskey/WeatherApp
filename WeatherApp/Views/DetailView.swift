@@ -13,7 +13,7 @@ struct DetailView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            Text("West Orange")
+            Text(weatherView?.cityText ?? "--")
                 .foregroundColor(.white)
                 .font(.system(size: 40, weight: .semibold, design: .default))
                 .padding(.top, 0)
@@ -25,23 +25,27 @@ struct DetailView: View {
                 .padding(.bottom, 30)
 
             HStack {
-                Image(systemName: "sun.max.fill")
+                Image(systemName: weatherView?.weatherImageString ?? "")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 70,height:70)
-                    .font(.system(size: 100, weight: .bold))
+                    .frame(width: 90,height:90)
+                  //  .font(.system(size: 100, weight: .bold))
                     .padding(.leading, 16)
                     .padding(.top, 30)
                 
-                
-                Text(weatherView?.weather.current.weather.first?.main ?? "--")
-                    .font(Font.custom("headline", size: 60))
-                    .padding(.top, 25)
-                    .padding()
+                VStack (alignment: .leading, spacing: 0){
+                    Text(weatherView?.weather.current.weather.first?.main ?? "--")
+                        .font(Font.custom("headline", size: 60))
+                        .padding(.top, 25)
+                     //   .padding()
+                    Text(weatherView?.weather.current.weather.first?.description ?? "--")
+                        .padding(.leading, 12)
+                }
+              
                 Spacer()
             }
             .padding(.top, 0)
-            .foregroundColor(Color(#colorLiteral(red: 0.8765596151, green: 0.8766866326, blue: 0.9076954722, alpha: 1)))
+            .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
             .shadow(radius: 6)
             
             HStack(alignment: .lastTextBaseline) {

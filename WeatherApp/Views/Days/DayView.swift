@@ -9,11 +9,10 @@
 import SwiftUI
 
 struct DayView: View {
-    let day: DailyWeather
-    let imageName: String
+    let day: DailyWeatherViewModel?
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            Text(day.weather.first?.main ?? "--")
+            Text(day?.weatherText ?? "--")
             .fixedSize()
                 .font(.system(size: 15, weight: .semibold))
                 .padding(.top, 25)
@@ -21,7 +20,7 @@ struct DayView: View {
                 .frame(width: 35)
                 .lineLimit(1)
             
-            Image(systemName: imageName)
+            Image(systemName: day?.weatherImageString ?? "")
             .resizable()
             .scaledToFit()
             .aspectRatio(contentMode: .fit)
@@ -29,12 +28,12 @@ struct DayView: View {
             
            // Spacer()
             
-            HighLowView(fontSize: 16, spacing: 5, topDegreeText: "\(Int(day.temp.max))°", bottomDegreeText: "\(Int(day.temp.min))°")
+            HighLowView(fontSize: 16, spacing: 5, topDegreeText: day?.tempHigh ?? "--", bottomDegreeText: day?.tempLow ?? "--")
                 .frame(width: 35)
                 .padding(.top, 5)
                 .padding(.bottom, 12)
                 
         }
-        .foregroundColor(Color(UIColor.white.withAlphaComponent(0.7)))
+        .foregroundColor(Color(UIColor.white.withAlphaComponent(0.9)))
     }
 }

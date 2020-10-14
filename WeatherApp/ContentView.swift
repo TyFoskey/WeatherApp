@@ -10,14 +10,44 @@ import SwiftUI
 
 struct ContentView: View {
     var temps: [Double] = [-25,-25,-28,-25,-23,-16,-11,-22,-24,-23,-24,-20]
-    @ObservedObject var networkManger = NetworkManager(coordinates: Coordinate(latitude: 40.7986, longitude: -74.2391))
-//    @State private var show = true
+    @EnvironmentObject var networkManger: NetworkManager
+    //    @State private var show = true
     
     var body: some View {
-        ForEach(networkManger.weatherViews) {
-            WeatherView(weatherViewModel: $0)
+        WeatherViewsContainer(weatherViews: $networkManger.weatherViews)
+    }
+}
+
+struct WeatherViewsContainer: View {
+    @Binding var weatherViews: [WeatherViewModel]
+    @State var isShowingWeather = true
+    @State var showDetails = false
+    
+    var body: some View {
+        ZStack {
+            if isShowingWeather {
+                ZStack {
+                    if weatherViews.first != nil {
+                        WeatherView(weatherViewModel: weatherViews.first, show: $showDetails)
+                            .preferredColorScheme(.dark)
+                    }
+                    
+                    VStack {
+                        HeaderView(isPresented: $isShowingWeather, isShowingDetails: $showDetails)
+                        Spacer()
+                    }.padding(.top, 20)
+                }.onTapGesture {
+                    print(self.weatherViews.count, "weather view count")
+                    withAnimation(.easeInOut(duration: 1.0)) {
+                        self.showDetails.toggle()
+                    }
+                }
+            } else {
+                LocationsView(isPresented: self.$isShowingWeather, weatherViewModels: self.$weatherViews)
+            }
         }
     }
+
 }
 
 struct NewView: View {

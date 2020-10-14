@@ -69,7 +69,7 @@ struct Line: View {
                                 .foregroundColor(Color.white)
                                 .position(x: self.points[$0].x + 28, y: self.points[$0].y + 12)
                             
-                            IndicatorPoint()
+                            IndicatorPoint(isSelected: $0 == 0)
                                 .position(x: self.points[$0].x + 28, y: self.points[$0].y + 30)
                                // .frame(width: 10, height: 10)
                             

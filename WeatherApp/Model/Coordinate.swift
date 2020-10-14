@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct Coordinate {
+struct Coordinate: Codable {
     let latitude: Double
     let longitude: Double
+    let cityName: String
 }
 
 extension Coordinate: CustomStringConvertible {
@@ -19,6 +20,6 @@ extension Coordinate: CustomStringConvertible {
     }
     
     static var newYorkCity: Coordinate {
-        return Coordinate(latitude: 40.7128, longitude: -74.0060)
+        return Coordinate(latitude: 40.7128, longitude: -74.0060, cityName: "New York")
     }
 }
