@@ -1,7 +1,7 @@
 # WeatherApp
 
 ## Description
-A basic weather app that shows the weather of a specific place with a creative design. This project uses SwiftUI, Core Location, OpenWeather Map API, AlamoFire, and MVVM architecture.
+A basic weather app that shows the weather of a specific place with a creative design. This project uses SwiftUI, Core Location, Combine, Cache, OpenWeather Map API, and MVVM architecture.
 
 ## Screenshots
 ![Screen Shot 2021-07-19 at 6 43_edited](https://user-images.githubusercontent.com/56944422/126599457-bcde7aed-6301-4519-a615-7efccd9c6e00.png)
